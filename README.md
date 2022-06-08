@@ -1,0 +1,2 @@
+# generatorCRC
+Calculate and check
