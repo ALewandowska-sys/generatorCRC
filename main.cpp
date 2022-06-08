@@ -8,11 +8,11 @@ string calculateCRC(string keyCRC,string messageBIN){
   string crc=messageBIN;
   string result;
   int keylen = keyCRC.length();
-  for(int i =0; i< keylen - 1; i++){
+  //we have to add some extra 0
+  for(int i = 1; i<= keylen - 1; i++){
     crc += "0";
   }
   int crclen = crc.length();
-  
   int i = 0;
 
   while(i <= crclen - keylen){
@@ -25,35 +25,12 @@ string calculateCRC(string keyCRC,string messageBIN){
       }
     }
     if(i<crclen && crc[i]!='1') i++;
-  }
+    }
   result = crc.substr(crclen - keylen + 1);
 
-  for(int i=0; i<=keylen - result.length(); i++){
-    result += "0";
-  }
-
-  //cout<<result<<endl;
-  //I transform my result, because CRC it isnt just a remainder, but it have the same length like keyCRC (it is starting by '1' if it isnt null)
-  char arr[keylen]; 
-  int x = 0;
-  while(result[x] != '1' && x < keylen){
-    x++;
-  }
-  //if it is starting by '0' and it isnt null, we must take 0 from begining and take at the end
-  if(x!=0 && x!=keylen){
-    for(int i = 0; i <= keylen - x; i ++){
-      arr[i] = result[keylen - x + i -1];
-    }
-    result = "";
-    result = string (arr);
-    //cout<<result<<endl;
-    for(int i=0; i<= keylen - result.length(); i++){
-      result += "0";
-    }
-  }
-  
   return result;
 }
+
 
 void checkCRC(string keyCRC,string messageBIN){
   string crc=messageBIN;
