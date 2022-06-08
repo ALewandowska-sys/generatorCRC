@@ -27,7 +27,14 @@ string calculateCRC(string keyCRC,string messageBIN){
     if(i<crclen && crc[i]!='1') i++;
     }
   result = crc.substr(crclen - keylen + 1);
+  //at the end we have to take a zero to have a full char
 
+  if(result.length() % 8 != 0){
+    int howMany = 8-result.length();
+    for(int i = 1; i <= howMany; i++) {
+      result += "0";
+    }
+  }
   return result;
 }
 
